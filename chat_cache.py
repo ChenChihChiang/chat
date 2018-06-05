@@ -11,13 +11,13 @@ class chat_cache:
 		pool = redis.ConnectionPool(host='chat-redis.izdgsg.ng.0001.apse1.cache.amazonaws.com', port=6379, decode_responses=True)
 		self.r = redis.Redis(connection_pool=pool)
 		self.url = "http://cognitive.nuwarobotics.cn:5006/v3/chatbot/product"
+		self.data = {"dialog": ["加油"]}
 
 	def use_cache(self):
 
-		data = {"dialog": ["加油"]}
-		res = requests.post(self.url, json=data)
+		res = requests.post(self.url, json=self.data)
 		answer = json.loads(res.text)['chat']
-		question_list = list(data["dialog"])
+		question_list = list(self.data["dialog"])
 
 		if len(question_list) > 2:
 
@@ -53,11 +53,10 @@ class chat_cache:
 
 	def add_cache(self):
 
-		data = {"dialog": ["加油"]}
-		res = requests.post(self.url, json=data)
+		res = requests.post(self.url, json=self.data)
 		answer = json.loads(res.text)['chat']
 
-		question_list = list(data["dialog"])
+		question_list = list(self.data["dialog"])
 
 		if len(question_list) > 2:
 
@@ -95,6 +94,6 @@ class chat_cache:
 
 if __name__ == '__main__':
 	c = chat_cache()
-	c.use_cache()
-	c.add_cache()
- 
+	#.use_cache()
+	for i in range(10):
+		c.add_cache()
