@@ -96,3 +96,5 @@ class chat_cache:
 if __name__ == '__main__':
 	c = chat_cache()
 	c.use_cache()
+	c.add_cache()
+ 
